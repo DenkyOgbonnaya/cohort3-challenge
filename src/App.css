@@ -1,3 +1,18 @@
-.App {
+.Layout {
+  height: 100vh;
+}
+.content {
+  margin-top: 20px;
+  width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+@media screen and (min-width: 760px){
+  .content{
+    width: 75%;
+  }
+}
+.footer {
+  margin-top: auto;
   text-align: center;
 }

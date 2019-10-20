@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Divider, Tag } from 'antd';
+import { Table} from 'antd';
+import propTypes from 'prop-types';
 
 const columns = [
   {
@@ -23,49 +24,24 @@ const columns = [
     dataIndex: 'hobby',
   },
   {
-    title: 'Date',
-    key: 'date',
-    dataIndex: 'date',
+    title: 'Birthday',
+    key: 'birthday',
+    dataIndex: 'birthday',
     
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    firstname: 'John',
-    lastname: 'Brown',
-    age: 32,
-    hobby: 'Dancing',
-  },
-  {
-    key: '2',
-    firstname: 'John',
-    lastname: 'Brown',
-    age: 32,
-    hobby: 'Dancing',
-  },
-  {
-    key: '5',
-    firstname: 'John',
-    lastname: 'Brown',
-    age: 32,
-    hobby: 'Dancing',
-  },
-  {
-    key: '4',
-    firstname: 'John',
-    lastname: 'Brown',
-    age: 32,
-    hobby: 'Dancing',
-  },
-];
+
 
 const UserList = ({users}) => {
 
     return (
         <Table columns={columns} dataSource={users} />
     )
+}
+
+UserList.prototypes = {
+    users: propTypes.array.isRequired
 }
 
 export default UserList;

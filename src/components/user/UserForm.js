@@ -9,24 +9,24 @@ const UserForm = ({isVisible, handleAdd, handleCancel}) => {
     const[lastname, setLastname] = useState('');
     const[age, setAge] = useState('');
     const[hobby, setHobby] = useState('');
-    const[date, setDate] = useState('');
+    const[birthday, setBirthday] = useState('');
     const[errors, setErrors]= useState({});
     const FormItem = Form.Item;
 
     const onAdd = () => {
-        const err = validateFields();
+        const err = valibirthdayFields();
         if(err){
             return
         }else{
             const key = uuid();
-            let userObject = {key, firstname, lastname, age, hobby, date};
+            let userObject = {key, firstname, lastname, age, hobby, birthday};
             handleAdd(userObject);
         }
     }
     const onDateChange = (date, dateString) => {
-        setDate(dateString);
+        setBirthday(dateString);
       }
-    const validateUser = user => {
+    const valibirthdayUser = user => {
         let errors = {};
         if(!user.firstname)
             errors.firstname = 'Please enter your firstname';
@@ -38,13 +38,13 @@ const UserForm = ({isVisible, handleAdd, handleCancel}) => {
             errors.age = 'Please enter your valid age';
         if(!user.hobby)
             errors.hobby = 'Please enter your hobby';
-        if(!user.date)
-            errors.date = 'Please select a date';
+        if(!user.birthday)
+            errors.birthday = 'Please select a birthday';
 
         return errors;
     }
-    const validateFields = () => {
-        const validationErrors = validateUser({firstname, lastname, age, hobby, date});
+    const valibirthdayFields = () => {
+        const validationErrors = valibirthdayUser({firstname, lastname, age, hobby, birthday});
         setErrors(validationErrors);
 
         if(Object.getOwnPropertyNames(validationErrors).length > 0)
@@ -92,7 +92,7 @@ const UserForm = ({isVisible, handleAdd, handleCancel}) => {
                 <Row gutter={8}>
                     <Col span={20}>
                         <FormItem
-                            validateStatus= {errors.date && 'error'} help={errors.date && errors.date}>
+                            validateStatus= {errors.birthday && 'error'} help={errors.birthday && errors.birthday}>
                             <DatePicker onChange = {onDateChange} />
                         </FormItem>
                     </Col>
