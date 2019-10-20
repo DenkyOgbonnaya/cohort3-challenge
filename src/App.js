@@ -1,23 +1,30 @@
 import React, {useState} from 'react';
 import './App.css';
-import UserForm from './components/UserForm';
+import UserForm from './components/user/UserForm';
+import UserList from './components/user/UserList';
+import { Button} from 'antd';
 
 function App() {
-  const[isVisible, setIsVisble] = useState(true);
+  const[users, setUsers] = useState([]);
+  const[isVisible, setIsVisble] = useState(false);
 
-  const handleAdd = () => {
-    setIsVisble(!isVisible)
+  const addUser = user => {
+    setUsers(users.concat(user));
+    hideUserForm();
   }
-  const handleCancel = () => {
+  const hideUserForm = () => {
     setIsVisble(!isVisible)
   }
   return (
     <div className="App">
+      <br />
+      <Button onClick = { () => setIsVisble(!isVisible)}>Add user</Button>
       <UserForm
         isVisible = {isVisible}
-        handleAdd = {handleAdd}
-        handleCancel = {handleCancel}
+        handleAdd = {addUser}
+        handleCancel = {hideUserForm}
        />
+       <UserList users= {users} />
     </div>
   );
 }
