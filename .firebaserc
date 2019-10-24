@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "cohort-ex"
+    "default": "cohort-ex",
+    "cohort-ex": "cohort-ex"
   }
 }
