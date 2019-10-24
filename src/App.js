@@ -23,7 +23,6 @@ function App() {
         <div className="logo"  />
         <span style={{color: '#fff', fontSize:'20px'}}>UserForm</span>
       </Header>
-      <br />
       <Content className='content'>
         <Button onClick = { () => setIsVisble(!isVisible)}>Add user</Button>
         <UserForm
