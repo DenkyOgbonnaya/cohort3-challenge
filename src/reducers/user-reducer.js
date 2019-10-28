@@ -9,7 +9,7 @@ const userReducer = (state = initialState, action) => {
         case ADD_USER : 
             return {
                 ...state,
-                users: state.users.concat(action.user)
+                users: state.users.concat(action.payload)
             }
         case TOGGLE_USER_FORM : 
             return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table} from 'antd';
-import propTypes from 'prop-types';
+import {useSelector} from 'react-redux';
 
 const columns = [
   {
@@ -33,15 +33,11 @@ const columns = [
 
 
 
-const UserList = ({users}) => {
-
+const UserList = () => {
+  const users = useSelector( state => state.user.users);
     return (
         <Table columns={columns} dataSource={users} />
     )
-}
-
-UserList.prototypes = {
-    users: propTypes.array.isRequired
 }
 
 export default UserList;

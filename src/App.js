@@ -1,22 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import UserForm from './components/user/UserForm';
 import UserList from './components/user/UserList';
-import {Layout, Button, message} from 'antd';
+import {Layout, Button} from 'antd';
+import {useDispatch} from 'react-redux';
+import { TOGGLE_USER_FORM } from './actions/action-types';
 
 function App() {
-  const[users, setUsers] = useState([]);
-  const[isVisible, setIsVisble] = useState(false);
   const { Header, Content, Footer } = Layout;
+  const dispatch = useDispatch();
+  
 
-  const addUser = user => {
-    setUsers(users.concat(user));
-    hideUserForm();
-    message.info('New user added');
-  }
-  const hideUserForm = () => {
-    setIsVisble(!isVisible)
-  }
   return (
     <Layout className="Layout">
       <Header>
@@ -24,13 +18,9 @@ function App() {
         <span style={{color: '#fff', fontSize:'20px'}}>UserForm</span>
       </Header>
       <Content className='content'>
-        <Button onClick = { () => setIsVisble(!isVisible)}>Add user</Button>
-        <UserForm
-            isVisible = {isVisible}
-            handleAdd = {addUser}
-            handleCancel = {hideUserForm}
-        />
-        <UserList users= {users} />
+        <Button onClick = { () => dispatch({type: TOGGLE_USER_FORM})}>Add user</Button>
+        <UserForm/>
+        <UserList />
       </Content>
        <Footer className='footer'>©{new Date().getFullYear()} Dennis Ogbonnaya</Footer>
     </Layout>

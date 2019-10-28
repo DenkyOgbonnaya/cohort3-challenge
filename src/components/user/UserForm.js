@@ -1,64 +1,56 @@
 import React, {useState} from 'react';
 import { Form, Row, Col, Modal, Input, DatePicker} from 'antd';
 import 'antd/dist/antd.css';
-import propTypes from 'prop-types';
-const uuid = require('uuidv4').default;
+import uuid from 'uuidv4';
+import {useSelector, useDispatch} from 'react-redux';
+import {ADD_USER, TOGGLE_USER_FORM} from '../../actions/action-types';
+import { validateUserInputs } from './helper';
+import {message} from 'antd';
 
-const UserForm = ({isVisible, handleAdd, handleCancel}) => {
+const UserForm = () => {
     const[firstname, setFirstname] = useState('');
     const[lastname, setLastname] = useState('');
     const[age, setAge] = useState('');
     const[hobby, setHobby] = useState('');
     const[birthday, setBirthday] = useState('');
     const[errors, setErrors]= useState({});
+
     const FormItem = Form.Item;
+    let isVisibleUserForm = useSelector( state => state.user.isVisibleUserForm);
+    const dispatch = useDispatch();
 
     const onAdd = () => {
-        const err = valibirthdayFields();
-        if(err){
-            return
-        }else{
+        if( isValidInputs() ){
             const key = uuid();
             let userObject = {key, firstname, lastname, age, hobby, birthday};
-            handleAdd(userObject);
-        }
+            dispatch({type: ADD_USER, payload: userObject});
+            message.info('New user added');
+            closeUserForm();
+        }else return;
     }
     const onDateChange = (date, dateString) => {
         setBirthday(dateString);
       }
-    const valibirthdayUser = user => {
-        let errors = {};
-        if(!user.firstname)
-            errors.firstname = 'Please enter your firstname';
-        if(!user.lastname)
-            errors.lastname = 'Please enter your lastname';
-        if(!user.age)
-            errors.age = 'Please enter your age';
-        if(user.age < 1)
-            errors.age = 'Please enter your valid age';
-        if(!user.hobby)
-            errors.hobby = 'Please enter your hobby';
-        if(!user.birthday)
-            errors.birthday = 'Please select a birthday';
-
-        return errors;
-    }
-    const valibirthdayFields = () => {
-        const validationErrors = valibirthdayUser({firstname, lastname, age, hobby, birthday});
+    
+    const isValidInputs = () => {
+        const validationErrors = validateUserInputs({firstname, lastname, age, hobby, birthday});
         setErrors(validationErrors);
 
         if(Object.getOwnPropertyNames(validationErrors).length > 0)
-            return 'error';
-        return undefined;
+            return false;
+        return true;
+    }
+    const closeUserForm = () => {
+        dispatch({type: TOGGLE_USER_FORM})
     }
     
     return (
         <Modal
-          visible={isVisible}
+          visible={isVisibleUserForm}
           title="Add a new user"
           okText="Add"
-          onCancel={handleCancel}
-          onOk={onAdd}
+          onCancel={closeUserForm}
+          onOk={ () => onAdd()}
         >
             <Form>
                 <Row gutter={10}>
@@ -101,9 +93,5 @@ const UserForm = ({isVisible, handleAdd, handleCancel}) => {
         </Modal>
     )
 }
-UserForm.propTypes = {
-    isVisible: propTypes.bool.isRequired,
-    handleAdd: propTypes.func.isRequired,
-    handleCancel: propTypes.func.isRequired
-}
+
 export default UserForm;
